@@ -1,6 +1,9 @@
 *.iml
 node_modules/
+!node_modules/prerender-sensecache
+!node_modules/prerender-senselog
 .DS_Store
 .elasticbeanstalk/
 .ebextensions/
 .idea/
+*.log

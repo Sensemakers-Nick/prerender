@@ -1,149 +1,35 @@
-Prerender
+SenseRender
 ===========================
 
-Prerender is a node server that uses Headless Chrome to render HTML, screenshots, PDFs, and HAR files out of any web page. The Prerender server listens for an http request, takes the URL and loads it in Headless Chrome, waits for the page to finish loading by waiting for the network to be idle, and then returns your content.
+SenseRender is basically Prerender (a node server that uses Headless Chrome to render HTML, screenshots, PDFs, and HAR files out of any web page. The Prerender server listens for an http request, takes the URL and loads it in Headless Chrome, waits for the page to finish loading by waiting for the network to be idle, and then returns your content.) with a few modifications.
 
-Looking for our PhantomJS Prerender server? [Go to our phantomjs branch](https://github.com/prerender/prerender/tree/phantomjs)
-
-##### The quickest way to run your own prerender server:
+##### The quickest way to run our prerender server:
 
 ```bash
-$ npm install prerender
-```
-##### server.js
-```js
-const prerender = require('prerender');
-const server = prerender();
-server.start();
-```
-##### test it:
-```bash
-curl http://localhost:3000/render?url=https://www.example.com/
+$ npm install
+$ sh run start.sh
 ```
 
-## Use Cases
-The Prerender server can be used in conjunction with [our Prerender.io middleware](#middleware) in order to serve the prerendered HTML of your javascript website to search engines (Google, Bing, etc) and social networks (Facebook, Twitter, etc) for SEO. We run the Prerender server at scale for SEO needs at [https://prerender.io/](https://prerender.io/).
-
-The Prerender server can be used on its own to crawl any web page and pull down the content for your own parsing needs. We host the Prerender server for your own crawling needs at [https://prerender.com/](https://prerender.com/).
-
-
-Prerender differs from Google Puppeteer in that Prerender is a web server that takes in URLs and loads them in parallel in a new tab in Headless Chrome. Puppeteer is an API for interacting with Chrome, but you still have to write that interaction yourself. With Prerender, you don't have to write any code to launch Chrome, load pages, wait for the page to load, or pull the content off of the page. The Prerender server handles all of that for you so you can focus on more important things!
-
-Below you will find documentation for our Prerender.io service (website SEO) and our Prerender.com service (web crawling).
-
-[Click here to jump to Prerender.io documentation](#prerenderio)
-
-[Click here to jump to Prerender.com documentation](#prerendercom)
-
-
-### <a id='prerenderio'></a>
-# Prerender.io
-###### For serving your prerendered HTML to crawlers for SEO
-
-Prerender adheres to Google's `_escaped_fragment_` proposal, which we recommend you use. It's easy:
-- Just add &lt;meta name="fragment" content="!"> to the &lt;head> of all of your pages
-- If you use hash urls (#), change them to the hash-bang (#!)
-- That's it! Perfect SEO on javascript pages.
-
-
-### <a id='middleware'></a>
-## Middleware
-
-This is a list of middleware available to use with the prerender service:
-
-#### Official middleware
-
-###### Javascript
-* [prerender-node](https://github.com/prerender/prerender-node) (Express)
-
-###### Ruby
-* [prerender_rails](https://github.com/prerender/prerender_rails) (Rails)
-
-###### Apache
-* [.htaccess](https://gist.github.com/thoop/8072354)
-
-###### Nginx
-* [nginx.conf](https://gist.github.com/thoop/8165802)
-
-#### Community middleware
-
-###### PHP
-* [zfr-prerender](https://github.com/zf-fr/zfr-prerender) (Zend Framework 2)
-* [YuccaPrerenderBundle](https://github.com/rjanot/YuccaPrerenderBundle) (Symfony 2)
-* [Laravel Prerender](https://github.com/JeroenNoten/Laravel-Prerender) (Laravel)
-
-###### Java
-* [prerender-java](https://github.com/greengerong/prerender-java)
-
-###### Go
-* [goprerender](https://github.com/tampajohn/goprerender)
-
-###### Grails
-* [grails-prerender](https://github.com/tuler/grails-prerender)
-
-###### Nginx
-* [Reverse Proxy Example](https://gist.github.com/Stanback/6998085)
-
-###### Apache
-* [.htaccess](https://gist.github.com/Stanback/7028309)
-
-Request more middleware for a different framework in this [issue](https://github.com/prerender/prerender/issues/12).
-
-
+## Use case
+The Prerender server is called from HAProxy, which then serves a static HTML SEO friendly page to the bot.
 
 ## How it works
 This is a simple service that only takes a url and returns the rendered HTML (with all script tags removed).
-
 Note: you should proxy the request through your server (using middleware) so that any relative links to CSS/images/etc still work.
 
+An example: 
 `GET https://service.prerender.io/https://www.google.com`
 
-`GET https://service.prerender.io/https://www.google.com/search?q=angular`
-
-
 ## Running locally
-If you are trying to test Prerender with your website on localhost, you'll have to run the Prerender server locally so that Prerender can access your local dev website.
-
-If you are running the prerender service locally. Make sure you set your middleware to point to your local Prerender server with:
-
-`export PRERENDER_SERVICE_URL=http://localhost:3000`
-
-	$ git clone https://github.com/prerender/prerender.git
-	$ cd prerender
-	$ npm install
-	$ node server.js
-
-Prerender will now be running on http://localhost:3000. If you wanted to start a web app that ran on say, http://localhost:8000, you can now visit the URL http://localhost:3000/http://localhost:8000 to see how your app would render in Prerender.
-
-To test how your website will render through Prerender using the middleware, you'll want to visit the URL http://localhost:8000?_escaped_fragment_=
+If you are running the prerender service locally for development purposes be sure to run the start.cmd script
+Then open a browser: https://localhost:9030/https://www.thuis.nl/
 
 That should send a request to the Prerender server and display the prerendered page through your website. If you View Source of that page, you should see the HTML with all of the `<script>` tags removed.
 
-Keep in mind you will see 504s for relative URLs when accessing http://localhost:3000/http://localhost:8000 because the actual domain on that request is your prerender server. This isn't really an issue because once you proxy that request through the middleware, then the domain will be your website and those requests won't be sent to the prerender server.  For instance if you want to see your relative URLS working visit `http://localhost:8000?_escaped_fragment_=`
-
-
-# Customization
-
-You can clone this repo and run `server.js` OR include prerender in your project with `npm install prerender --save` to create an express-like server with custom plugins.
-
+Good luck!
+Nick from Sensemakers.
 
 ## Options
-
-### chromeLocation
-```
-var prerender = require('./lib');
-
-var server = prerender({
-    chromeLocation: '/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary'
-});
-
-server.start();
-```
-
-Uses a chrome install at a certain location. Prerender does not download Chrome so you will want to make sure Chrome is installed on your server already. The Prerender server checks a few known locations for Chrome but this lets you override that.
-
-`Default: null`
-
 
 ### logRequests
 ```
