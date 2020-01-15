@@ -1,6 +1,7 @@
 {
     "updateTimer":300,
     "verboseUpdate":true,
+    "verbose":false,
     "site": [
         "thuis.nl",
         "gigacams.com",
