@@ -1,0 +1,9 @@
+{
+    "updateTimer":300,
+    "verboseUpdate":true,
+    "site": [
+        "thuis.nl",
+        "gigacams.com",
+        "zuhause.com"
+    ]
+}
