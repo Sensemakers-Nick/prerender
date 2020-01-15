@@ -12,6 +12,7 @@
     "body-parser": "~1.18.3",
     "chrome-remote-interface": "~0.25.7",
     "compression": "~1.7.3",
+    "crawler": "^1.2.1",
     "express": "~4.16.3",
     "he": "~1.1.1",
     "node-fs": "^0.1.7",
