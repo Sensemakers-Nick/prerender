@@ -19,7 +19,7 @@ const server = prerender({
 server.use(prerender.sendPrerenderHeader());
 
 if (resourceBlockEnabled == 1)
-    server.use(prerender.blockResources());
+    server.use(require('prerender-senseblock'));
 
 if (scriptsEnabled == 0)
     server.use(prerender.removeScriptTags());
