@@ -8,3 +8,4 @@ node_modules/
 .ebextensions/
 .idea/
 *.log
+logs/*.log
