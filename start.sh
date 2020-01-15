@@ -18,8 +18,6 @@ user=$(whoami)
 scriptdir=$(dirname "$0") DIR=$(cd "$(dirname "$0")"; pwd)
 attempt=0
 
-$(sleep 15; node crawler/index.js) &
-
 if [ $user = 'deploy' ]; then
 
 	echo "OK!"
@@ -36,6 +34,7 @@ if [ $user = 'deploy' ]; then
 			chmod 777 /dev/shm/prerender -R
 		fi
         node sensemakers.js
+        $(sleep 15; node crawler/index.js) &
 	popd
 else
 
