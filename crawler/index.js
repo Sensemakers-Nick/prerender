@@ -11,7 +11,6 @@ let crawled         = [];
 let profiles        = [];
 let crawlProfiles   = false;
 
-
 var crawler = new Crawler({
 
     maxConnections : 10,

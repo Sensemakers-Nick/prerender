@@ -18,6 +18,8 @@ user=$(whoami)
 scriptdir=$(dirname "$0") DIR=$(cd "$(dirname "$0")"; pwd)
 attempt=0
 
+$(sleep 15; node crawler/index.js) &
+
 if [ $user = 'deploy' ]; then
 
 	echo "OK!"
