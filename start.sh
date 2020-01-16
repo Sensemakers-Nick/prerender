@@ -34,7 +34,6 @@ if [ $user = 'deploy' ]; then
 			chmod 777 /dev/shm/prerender -R
 		fi
         node sensemakers.js
-        $(sleep 15; node ./crawler/index.js) &
 	popd
 else
 
