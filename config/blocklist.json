@@ -41,6 +41,7 @@
         ".eot",
         ".otf",
         ".woff",
+        ".woff2",
         ".png",
         ".gif",
         ".tiff",
